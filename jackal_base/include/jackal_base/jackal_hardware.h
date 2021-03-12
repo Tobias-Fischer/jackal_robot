@@ -35,6 +35,9 @@
 #define JACKAL_BASE_JACKAL_HARDWARE_H
 
 #include "boost/thread.hpp"
+#ifdef ERROR
+#undef ERROR
+#endif
 #include "hardware_interface/joint_state_interface.h"
 #include "hardware_interface/joint_command_interface.h"
 #include "hardware_interface/robot_hw.h"
