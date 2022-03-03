@@ -74,8 +74,13 @@ void JackalHardware::copyJointsFromHardware()
   {
     for (int i = 0; i < 4; i++)
     {
-      joints_[i].position = feedback_msg_->drivers[i % 2].measured_travel;
-      joints_[i].velocity = feedback_msg_->drivers[i % 2].measured_velocity;
+      const int j = i % 2;
+      if (std::isnan(joints_[i].position_offset))
+      {
+        joints_[i].position_offset = feedback_msg_->drivers[j].measured_travel;
+      }
+      joints_[i].position = feedback_msg_->drivers[j].measured_travel - joints_[i].position_offset;
+      joints_[i].velocity = feedback_msg_->drivers[j].measured_velocity;
       joints_[i].effort = 0;  // TODO(mikepurvis): determine this from amperage data.
     }
   }
